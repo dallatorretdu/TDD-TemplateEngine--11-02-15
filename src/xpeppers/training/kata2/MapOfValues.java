@@ -6,9 +6,10 @@ import java.util.Iterator;
 
 public class MapOfValues{
 	private Map<String,String> valueMap;
+	private Iterator<String> iterator;
 	
 	protected MapOfValues(){
-		valueMap = new TreeMap<>();
+		valueMap = new TreeMap<String, String>();
 	}
 	
 	protected void addVariable(String varName, String varContent){
@@ -21,8 +22,18 @@ public class MapOfValues{
 		return "";
 	}
 	
-	protected Iterator<String> getIterator(){
-		return valueMap.keySet().iterator();
+	protected void initializeIterator(){
+		iterator = valueMap.keySet().iterator();
+	}
+	
+	protected boolean hasNext(){
+		return iterator.hasNext();
+	}
+	
+	protected String getNextElement() {
+		if (!iterator.hasNext())
+			return "";
+		return (String) iterator.next();
 	}
 	
 }

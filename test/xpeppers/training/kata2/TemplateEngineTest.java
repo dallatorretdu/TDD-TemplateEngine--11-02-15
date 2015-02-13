@@ -98,4 +98,15 @@ public class TemplateEngineTest {
 		TemplateEngine templateEngine = new TemplateEngine();
 		assertEquals("${{$name}}", templateEngine.doublesBracketsWhenPreceededByDollar("${$name}",testMap));
 	}
+	
+	@Test
+	public void MapOfValuesCanIterateItsOwnContent() {
+		MapOfValues testMap = new MapOfValues();
+		testMap.addVariable("first", "Element");
+		testMap.addVariable("second", "Content");
+		testMap.initializeIterator();
+		assertEquals("first", testMap.getNextElement());
+		assertEquals("second", testMap.getNextElement());
+		assertEquals("", testMap.getNextElement());
+	}
 }

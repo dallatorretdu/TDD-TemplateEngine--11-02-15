@@ -2,21 +2,19 @@ package xpeppers.training.kata2;
 
 import java.util.regex.Pattern; 
 import java.util.regex.Matcher;
-import java.util.Iterator;
 
 class TemplateEngine {
 	public TemplateEngine() {}
 	
 	public String evaluate(String input, MapOfValues variableMap){
 		input = doublesBracketsWhenPreceededByDollar(input, variableMap);
+		variableMap.initializeIterator();
 		
-		Iterator<String> iterator = variableMap.getIterator();
-		
-		while(iterator.hasNext()){
-			String varName = (String) iterator.next();
+		while(variableMap.hasNext()){
+			String varName = variableMap.getNextElement();
 			
 			String variableRegex = "\\{\\$" + varName + "\\}";
-			String replaceValue = variableMap.getVariable(varName);;
+			String replaceValue = variableMap.getVariable(varName);
 			
 			Pattern pattern = Pattern.compile(variableRegex);
 	        Matcher matcher = pattern.matcher(input);
@@ -28,10 +26,10 @@ class TemplateEngine {
 	}
 	
 	protected String doublesBracketsWhenPreceededByDollar(String input, MapOfValues variableMap){
-		Iterator<String> iterator = variableMap.getIterator();
+		variableMap.initializeIterator();
 		
-		while(iterator.hasNext()){
-			String varName = (String) iterator.next();
+		while(variableMap.hasNext()){
+			String varName = variableMap.getNextElement();
 			String replaceValue = "\\${{\\$" + varName + "}}";
 					
 			String variableRegex = "\\$\\{\\$" + varName + "\\}";
