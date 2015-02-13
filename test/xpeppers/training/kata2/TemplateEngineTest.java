@@ -77,9 +77,7 @@ public class TemplateEngineTest {
 		TemplateEngine templateEngine = new TemplateEngine();
 
 		thrown.expect(IllegalArgumentException.class);
-		String output = templateEngine.evaluate("Good Morning Mr {$rossiSurname}.", testMap);
-		
-		assertEquals("Good Morning Mr Rossi.", output);
+		templateEngine.evaluate("Good Morning Mr {$rossiSurname}.", testMap);
 	};
 	
 	@Test

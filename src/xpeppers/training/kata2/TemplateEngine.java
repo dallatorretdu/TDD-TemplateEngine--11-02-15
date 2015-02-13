@@ -8,6 +8,13 @@ class TemplateEngine {
 	
 	public String evaluate(String input, MapOfValues variableMap){
 		input = doublesBracketsWhenPreceededByDollar(input, variableMap);
+		input = parseSimpleVariablesInText(input, variableMap);
+		return input;
+	}
+	//
+	//SUBS
+	//
+	private String parseSimpleVariablesInText(String input, MapOfValues variableMap) {
 		variableMap.initializeIterator();
 		
 		while(variableMap.hasNext()){
