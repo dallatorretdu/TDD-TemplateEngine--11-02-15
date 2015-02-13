@@ -31,7 +31,6 @@ class TemplateEngine {
 		while(variableMap.hasNext()){
 			String varName = variableMap.getNextElement();
 			String replaceValue = "\\${{\\$" + varName + "}}";
-					
 			String variableRegex = "\\$\\{\\$" + varName + "\\}";
 			Pattern pattern = Pattern.compile(variableRegex);
 	        Matcher matcher = pattern.matcher(input);
