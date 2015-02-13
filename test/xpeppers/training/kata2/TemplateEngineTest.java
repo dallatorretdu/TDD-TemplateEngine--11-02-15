@@ -2,20 +2,26 @@ package xpeppers.training.kata2;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class TemplateEngineTest {	
+public class TemplateEngineTest {
+	private MapOfValues testMap;
+	
+	@Before
+	public void initializeMap() {
+		testMap = new MapOfValues();
+	}
 	
 	@Test
 	public void mapAcceptsNewVariableWithoutException() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Mario");
-	};
+	}
+
 
 	@Test
 	public void mapRecordsNewVariables() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Mario");
 		testMap.addVariable("surname", "Rossi");
 		assertEquals("Mario", testMap.getVariable("name"));
@@ -31,7 +37,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void evaluatesStringWithOneVariable() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Mario");
 		TemplateEngine templateEngine = new TemplateEngine();
 		String output = templateEngine.evaluate("Good evening {$name}, how are you feeling today?", testMap);
@@ -40,7 +45,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void evaluatesStringWithOneComplexVariable() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("dogName_Full", "Lucky Luke");
 		TemplateEngine templateEngine = new TemplateEngine();
 		String output = templateEngine.evaluate("How is {$dogName_Full} doing?", testMap);
@@ -49,7 +53,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void evaluatesStringWithMultipleVariable() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Lucky");
 		testMap.addVariable("surname", "Rossi");
 		TemplateEngine templateEngine = new TemplateEngine();
@@ -59,7 +62,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void evaluatesStringWithMultipleExpressions() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Lucky");
 		testMap.addVariable("surname", "Rossi");
 		TemplateEngine templateEngine = new TemplateEngine();
@@ -71,7 +73,6 @@ public class TemplateEngineTest {
 	public void throwsExceptionIfTemplateValueIsNotFoundInText() {
 		ExpectedException thrown = ExpectedException.none();
 		
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("rossiName", "Mario");
 		testMap.addVariable("rossiSurname", "Rossi");
 		TemplateEngine templateEngine = new TemplateEngine();
@@ -82,7 +83,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void evaluatesComplexCases() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Lucky");
 		TemplateEngine templateEngine = new TemplateEngine();
 		String output = templateEngine.evaluate("Hello ${$name}, how are you?", testMap);
@@ -91,7 +91,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void canAlignComplexCases() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("name", "Lucky");
 		TemplateEngine templateEngine = new TemplateEngine();
 		assertEquals("${{$name}}", templateEngine.doublesBracketsWhenPreceededByDollar("${$name}",testMap));
@@ -99,7 +98,6 @@ public class TemplateEngineTest {
 	
 	@Test
 	public void MapOfValuesCanIterateItsOwnContent() {
-		MapOfValues testMap = new MapOfValues();
 		testMap.addVariable("first", "Element");
 		testMap.addVariable("second", "Content");
 		testMap.initializeIterator();
