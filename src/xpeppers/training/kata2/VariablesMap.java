@@ -4,11 +4,11 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.util.Iterator;
 
-public class VariablesSet{
+public class VariablesMap{
 	private Map<String,String> valueMap;
 	private Iterator<String> iterator;
 	
-	protected VariablesSet(){
+	protected VariablesMap(){
 		valueMap = new TreeMap<String, String>();
 	}
 	

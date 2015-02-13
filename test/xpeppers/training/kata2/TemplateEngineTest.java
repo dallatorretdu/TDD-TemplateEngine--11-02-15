@@ -7,11 +7,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class TemplateEngineTest {
-	private VariablesSet testMap;
+	private VariablesMap testMap;
 	
 	@Before
 	public void initializeMap() {
-		testMap = new VariablesSet();
+		testMap = new VariablesMap();
 	}
 	
 	@Test

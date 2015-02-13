@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 class TemplateEngine {
 	public TemplateEngine() {}
 	
-	public String evaluate(String input, VariablesSet variableMap){
+	public String evaluate(String input, VariablesMap variableMap){
 		input = doublesBracketsWhenPreceededByDollar(input, variableMap);
 		input = parseSimpleVariablesInText(input, variableMap);
 		return input;
@@ -14,7 +14,7 @@ class TemplateEngine {
 	//
 	//SUBS
 	//
-	private String parseSimpleVariablesInText(String input, VariablesSet variableMap) {
+	private String parseSimpleVariablesInText(String input, VariablesMap variableMap) {
 		variableMap.initializeIterator();
 		
 		while(variableMap.hasNext()){
@@ -26,7 +26,7 @@ class TemplateEngine {
 		return input;
 	}
 	
-	protected String doublesBracketsWhenPreceededByDollar(String input, VariablesSet variableMap){
+	protected String doublesBracketsWhenPreceededByDollar(String input, VariablesMap variableMap){
 		variableMap.initializeIterator();
 		
 		while(variableMap.hasNext()){
