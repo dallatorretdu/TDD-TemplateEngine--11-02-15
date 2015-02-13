@@ -19,15 +19,9 @@ class TemplateEngine {
 		
 		while(variableMap.hasNext()){
 			String varName = variableMap.getNextElement();
-			
 			String variableRegex = "\\{\\$" + varName + "\\}";
 			String replaceValue = variableMap.getVariable(varName);
-			
-			Pattern pattern = Pattern.compile(variableRegex);
-	        Matcher matcher = pattern.matcher(input);
-	        if(!matcher.find())
-	        	throw new IllegalArgumentException("Missing Value Exception");
-	        input = matcher.replaceAll(replaceValue);
+			input = executeRegexOnPattern(input, variableRegex, replaceValue);
 		}
 		return input;
 	}
@@ -39,10 +33,20 @@ class TemplateEngine {
 			String varName = variableMap.getNextElement();
 			String replaceValue = "\\${{\\$" + varName + "}}";
 			String variableRegex = "\\$\\{\\$" + varName + "\\}";
-			Pattern pattern = Pattern.compile(variableRegex);
-	        Matcher matcher = pattern.matcher(input);
-	        input = matcher.replaceAll(replaceValue);
+			try{
+				input = executeRegexOnPattern(input, variableRegex, replaceValue); }
+			catch(IllegalArgumentException e){ }
 		}
+		return input;
+	}
+	
+	private String executeRegexOnPattern(String input, String variableRegex,
+			String replaceValue) {
+		Pattern pattern = Pattern.compile(variableRegex);
+		Matcher matcher = pattern.matcher(input);
+		if(!matcher.find())
+			throw new IllegalArgumentException("Missing Value Exception");
+		input = matcher.replaceAll(replaceValue);
 		return input;
 	}
 }
