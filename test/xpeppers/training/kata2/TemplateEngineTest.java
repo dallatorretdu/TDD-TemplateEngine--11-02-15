@@ -7,11 +7,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class TemplateEngineTest {
-	private MapOfValues testMap;
+	private VariablesSet testMap;
 	
 	@Before
 	public void initializeMap() {
-		testMap = new MapOfValues();
+		testMap = new VariablesSet();
 	}
 	
 	@Test
@@ -31,7 +31,7 @@ public class TemplateEngineTest {
 	@Test
 	public void evaluatesStringWithNoVariable() {
 		TemplateEngine templateEngine = new TemplateEngine();
-		String output = templateEngine.evaluate("A plain, clear string", new MapOfValues());
+		String output = templateEngine.evaluate("A plain, clear string", testMap);
 		assertEquals("A plain, clear string", output);
 	};
 	
