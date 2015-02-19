@@ -7,7 +7,6 @@ class TemplateEngine {
 	public TemplateEngine() {}
 	
 	public String evaluate(String input, VariablesMap variableMap){
-		input = doublesBracketsWhenPreceededByDollar(input, variableMap);
 		input = parseSimpleVariablesInText(input, variableMap);
 		return input;
 	}
@@ -19,23 +18,9 @@ class TemplateEngine {
 		
 		while(variableMap.hasNext()){
 			String varName = variableMap.getNextElement();
-			String variableRegex = "\\{\\$" + varName + "\\}";
+			String variableRegex = "\\$\\{" + varName + "\\}";
 			String replaceValue = variableMap.getVariable(varName);
 			input = executeRegexOnPattern(input, variableRegex, replaceValue);
-		}
-		return input;
-	}
-	
-	protected String doublesBracketsWhenPreceededByDollar(String input, VariablesMap variableMap){
-		variableMap.initializeIterator();
-		
-		while(variableMap.hasNext()){
-			String varName = variableMap.getNextElement();
-			String replaceValue = "\\${{\\$" + varName + "}}";
-			String variableRegex = "\\$\\{\\$" + varName + "\\}";
-			try{
-				input = executeRegexOnPattern(input, variableRegex, replaceValue); }
-			catch(IllegalArgumentException e){ }
 		}
 		return input;
 	}

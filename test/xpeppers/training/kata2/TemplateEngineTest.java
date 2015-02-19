@@ -39,7 +39,7 @@ public class TemplateEngineTest {
 	public void evaluatesStringWithOneVariable() {
 		testMap.addVariable("name", "Mario");
 		TemplateEngine templateEngine = new TemplateEngine();
-		String output = templateEngine.evaluate("Good evening {$name}, how are you feeling today?", testMap);
+		String output = templateEngine.evaluate("Good evening ${name}, how are you feeling today?", testMap);
 		assertEquals("Good evening Mario, how are you feeling today?", output);
 	};
 	
@@ -47,7 +47,7 @@ public class TemplateEngineTest {
 	public void evaluatesStringWithOneComplexVariable() {
 		testMap.addVariable("dogName_Full", "Lucky Luke");
 		TemplateEngine templateEngine = new TemplateEngine();
-		String output = templateEngine.evaluate("How is {$dogName_Full} doing?", testMap);
+		String output = templateEngine.evaluate("How is ${dogName_Full} doing?", testMap);
 		assertEquals("How is Lucky Luke doing?", output);
 	};
 	
@@ -56,16 +56,7 @@ public class TemplateEngineTest {
 		testMap.addVariable("name", "Lucky");
 		testMap.addVariable("surname", "Rossi");
 		TemplateEngine templateEngine = new TemplateEngine();
-		String output = templateEngine.evaluate("Hello {$name}, {$surname}, how are you?", testMap);
-		assertEquals("Hello Lucky, Rossi, how are you?", output);
-	};
-	
-	@Test
-	public void evaluatesStringWithMultipleExpressions() {
-		testMap.addVariable("name", "Lucky");
-		testMap.addVariable("surname", "Rossi");
-		TemplateEngine templateEngine = new TemplateEngine();
-		String output = templateEngine.evaluate("Hello {$name}, {$surname}, how are you?", testMap);
+		String output = templateEngine.evaluate("Hello ${name}, ${surname}, how are you?", testMap);
 		assertEquals("Hello Lucky, Rossi, how are you?", output);
 	};
 	
@@ -78,23 +69,17 @@ public class TemplateEngineTest {
 		TemplateEngine templateEngine = new TemplateEngine();
 
 		thrown.expect(IllegalArgumentException.class);
-		templateEngine.evaluate("Good Morning Mr {$rossiSurname}.", testMap);
+		templateEngine.evaluate("Good Morning Mr ${rossiSurname}.", testMap);
 	};
 	
 	@Test
 	public void evaluatesComplexCases() {
 		testMap.addVariable("name", "Lucky");
+		testMap.addVariable("Lucky", "Tiago");
 		TemplateEngine templateEngine = new TemplateEngine();
-		String output = templateEngine.evaluate("Hello ${$name}, how are you?", testMap);
+		String output = templateEngine.evaluate("Hello ${${name}}, how are you?", testMap);
 		assertEquals("Hello ${Lucky}, how are you?", output);
 	};
-	
-	@Test
-	public void canAlignComplexCases() {
-		testMap.addVariable("name", "Lucky");
-		TemplateEngine templateEngine = new TemplateEngine();
-		assertEquals("${{$name}}", templateEngine.doublesBracketsWhenPreceededByDollar("${$name}",testMap));
-	}
 	
 	@Test
 	public void MapOfValuesCanIterateItsOwnContent() {
